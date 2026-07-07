@@ -1,0 +1,82 @@
+import streamlit as st
+
+from utils.gemini_helper import generate_farming_advice
+from utils.youtube_links import generate_youtube_links
+from utils.weather import get_weather_advice
+
+
+# Load Prompt Files
+with open("prompts/organic_budget.txt", "r", encoding="utf-8") as f:
+    organic_prompt = f.read()
+
+with open("prompts/weather_farm.txt", "r", encoding="utf-8") as f:
+    weather_prompt = f.read()
+
+
+st.set_page_config(page_title="EcoFarm AI")
+
+st.title("AI EcoFarm Assistant")
+st.subheader(" ఆర్గానిక్ వ్యవసాయ సహాయకుడు")
+
+
+# Inputs
+
+crop = st.text_input(
+    "🌾 పంట పేరు (Crop Name)",
+    placeholder="ఉదా: Tomato / Paddy / Cotton"
+)
+
+
+
+land = st.text_input(
+    "🧑‍🌾 భూమి పరిమాణం (Land Size)",
+    placeholder="ఉదా: 2 Acres"
+)
+
+season = st.text_input(
+    "🌤️ సీజన్ (Season)",
+    placeholder="ఉదా: Summer / Rainy"
+)
+
+location = st.text_input(
+    "📍 ప్రాంతం (Location)",
+    placeholder="ఉదా: Guntur"
+)
+
+weather = st.text_input(
+    "☁️ వాతావరణ పరిస్థితి (Weather Condition)",
+    placeholder="ఉదా: Heavy Rain / Hot Climate"
+)
+
+issue = st.text_input(
+    "🐛 సమస్య వివరించండి (Describe Problem)",
+    placeholder="ఉదా: Yellow Leaves / Low Growth"
+)
+
+if st.button("సలహా పొందండి"):
+
+    weather_tip = get_weather_advice(weather)
+
+    final_prompt = f"""
+{crop_prompt}
+
+Farmer Details:
+
+Crop: {crop}
+Land Size: {land}
+Season: {season}
+Location: {location}
+Weather: {weather}
+Problem: {issue}
+
+Weather Advice:
+{weather_tip}
+
+IMPORTANT:
+Respond ONLY in {T["resp"]}.
+Respond ONLY in {T["resp"]}.
+- Do NOT mix Telugu and English.
+- Translate all headings into {T["resp"]}.
+- Use simple language suitable for farmers.
+- Do not use English words unless they are crop names (e.g., Tomato, Cotton).
+"""
