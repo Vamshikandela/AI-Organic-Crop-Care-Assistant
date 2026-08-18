@@ -25,7 +25,7 @@ def add_bg_from_local(image_file):
         encoded_string = base64.b64encode(image.read()).decode()
 
     st.markdown(
-        f"""
+        """
 <style>
 
 /* ===========================
@@ -44,7 +44,7 @@ def add_bg_from_local(image_file):
     content: "";
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.45);
+    background: rgba(255,255,255,0.18);
     z-index: -1;
 }}
 
@@ -58,76 +58,37 @@ def add_bg_from_local(image_file):
     padding-bottom: 2rem;
 }}
 
-/* ===========================
-   TITLES
-=========================== */
 
-.block-container h1 {{
-    color: #ffffff !important;
-    font-size: 42px !important;
-    font-weight: 700 !important;
-}}
+/* ========= INPUT LABEL ========= */
 
-.block-container h2 {{
-    color: #ffffff !important;
-    font-size: 28px !important;
-    font-weight: 600 !important;
-}}
-
-.block-container h3 {{
-    color: #ffffff !important;
-    font-size: 28px !important;
-    font-weight: 600 !important;
-}}
-
-.block-container h4,
-.block-container h5,
-.block-container h6 {{
-    color: #ffffff !important;
-    font-size: 28px !important;
-}}
-
-/* ===========================
-   LABELS
-=========================== */
-
-label,
-div[data-testid="stTextInput"] label {{
-    color: #111 !important;
-    font-size: 60px !important;
+div[data-testid="stWidgetLabel"] p{{
+    color: white !important;
+    font-size: 22px !important;
     font-weight: bold !important;
 }}
 
-/* ===========================
-   INPUTS
-=========================== */
+/* INPUT BOX */
 
-div[data-testid="stTextInput"] input {{
-
-    background: white !important;
+div[data-testid="stTextInput"] input{{
+    background-color: white !important;
     color: black !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
 
-    border-radius: 12px;
+    border: 2px solid #43A047 !important;
+    border-radius: 12px !important;
 
-    border: 2px solid #43A047;
-
-    font-size: 30px !important;
-    font-weight: bold !important
-    padding: 12px;
+    padding: 12px !important;
 }}
 
-div[data-testid="stTextInput"] input:focus {{
+/* Placeholder */
 
-    border: 2px solid #2E7D32 !important;
-    font-weight: bold !important
-    box-shadow: 0 0 8px rgba(46,125,50,.35);
-}}
-
-input::placeholder {{
-    color: #777 !important;
-    
+div[data-testid="stTextInput"] input::placeholder{{
+    color: gray !important;
     font-size: 16px !important;
 }}
+
+
 
 /* ===========================
    BUTTON
@@ -160,7 +121,7 @@ input::placeholder {{
 
 .result-box {{
 
-    background: rgba(255,255,255,0.35);
+    background: rgba(255,255,255,.78);
 
     border-radius: 15px;
 
@@ -244,7 +205,7 @@ section[data-testid="stSidebar"] hr {{
 }}
 
 </style>
-        """,
+        """.format(encoded_string=encoded_string),
         unsafe_allow_html=True,
     )
 
@@ -359,12 +320,79 @@ with open(prompt_file, "r", encoding="utf-8") as f:
 st.title(T["title"])
 st.subheader(T["sub"])
 
-crop=st.text_input(T["crop"],placeholder=T["crop_ph"])
-land=st.text_input(T["land"],placeholder=T["land_ph"])
-season=st.text_input(T["season"],placeholder=T["season_ph"])
-location=st.text_input(T["loc"],placeholder=T["loc_ph"])
-weather=st.text_input(T["weather"],placeholder=T["weather_ph"])
-issue=st.text_input(T["issue"],placeholder=T["issue_ph"])
+# ---------------- INPUT FIELDS ---------------- #
+
+# Crop Name
+st.markdown(
+    f"<h4 style='color:white; font-size:22px; font-weight:bold; margin-bottom:0px;'>{T['crop']}</h4>",
+    unsafe_allow_html=True
+)
+crop = st.text_input(
+    "",
+    placeholder=T["crop_ph"],
+    label_visibility="collapsed",
+    key="crop"
+)
+
+# Land Size
+st.markdown(
+    f"<h4 style='color:white; font-size:22px; font-weight:bold; margin-bottom:0px;'>{T['land']}</h4>",
+    unsafe_allow_html=True
+)
+land = st.text_input(
+    "",
+    placeholder=T["land_ph"],
+    label_visibility="collapsed",
+    key="land"
+)
+
+# Season
+st.markdown(
+    f"<h4 style='color:white; font-size:22px; font-weight:bold; margin-bottom:0px;'>{T['season']}</h4>",
+    unsafe_allow_html=True
+)
+season = st.text_input(
+    "",
+    placeholder=T["season_ph"],
+    label_visibility="collapsed",
+    key="season"
+)
+
+# Location
+st.markdown(
+    f"<h4 style='color:white; font-size:22px; font-weight:bold; margin-bottom:0px;'>{T['loc']}</h4>",
+    unsafe_allow_html=True
+)
+location = st.text_input(
+    "",
+    placeholder=T["loc_ph"],
+    label_visibility="collapsed",
+    key="location"
+)
+
+# Weather
+st.markdown(
+    f"<h4 style='color:white; font-size:22px; font-weight:bold; margin-bottom:0px;'>{T['weather']}</h4>",
+    unsafe_allow_html=True
+)
+weather = st.text_input(
+    "",
+    placeholder=T["weather_ph"],
+    label_visibility="collapsed",
+    key="weather"
+)
+
+# Problem
+st.markdown(
+    f"<h4 style='color:white; font-size:22px; font-weight:bold; margin-bottom:0px;'>{T['issue']}</h4>",
+    unsafe_allow_html=True
+)
+issue = st.text_input(
+    "",
+    placeholder=T["issue_ph"],
+    label_visibility="collapsed",
+    key="issue"
+)
 
 weather_tip=get_weather_advice(weather,language=T['resp'])
 
