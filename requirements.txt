@@ -1,4 +1,4 @@
 streamlit
-google-generativeai
+google-generativeai    ###sdk model
 python-dotenv
 requests
